@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+	 <ul>
+	 	{% for items in all %}
+	 	<li>{{items.todo_item}}</li> <input" type="submit" value="Done">
+	 	{% endfor %}
+	 </ul>
+{% endblock %}
