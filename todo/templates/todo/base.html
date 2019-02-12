@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Subodh,s todo</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>My Todo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<style type="text/css">
-	ul{
-		list-style: none;
-
-	}
-</style>
 <body>
-	<h4>from app</h4>
-	<h2>Work Hard, Get Success</h2>
-		<form action="." method="POST" name="add">{% csrf_token %}
-			{{ form.as_p }}
-			<input type="submit" value="Add">
+	<h1>Your todos</h1>
+	<form action="." method="POST"	>{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Add" >
+	</form>
+	<h4>Your todo list is </h4>
+	<ul>	
+		{% for items in t %}
+		<li>items.todo_item</li>
+		<form action="." method="POST">{% csrf_token %}
+			<input type="submit" value="done">
 		</form>
-	 <h3>To do list is here : </h3>
-	 <ul>
-	 	{% for items in all %}
-	 	<li>{{items.todo_item}}</li>
-	 	<input type="submit" value="Done">
-	 	{% endfor %}
-	 </ul>
+		{% endfor %}
+	</ul>
+	</h4>
 </body>
 </html>

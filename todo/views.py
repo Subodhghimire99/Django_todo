@@ -1,21 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.http import HttpResponseRedirect
 from .models import todo
-
-from .forms import addtodo_form
+from .forms import todo_form
 
 def todo_view(request,*args,**kwargs):
-	raw_form = addtodo_form()
-	all_todo = todo.objects.all()
-	if request.method == 'POST' and 'add' in request.POST:
-		raw_form_data = addtodo_form(request.POST)
-		if raw_form_data.is_valid():
-			todo.objects.create(**raw_form_data.cleaned_data)
-			raw_form = addtodo_form()
-	# if request.method == 'POST' and 'delete' in request.POST:
-		# todo.getobject()
-	context = {
-		"form":raw_form,
-		"all":all_todo
+	todo_form_obj = todo_form()
+	todos=todo.objects.all()
+	if request.method == 'POST':
+		todo_form_obj = todo_form(request.POST)
+		if todo_form_obj.is_valid():
+			todo.objects.create(**todo_form_obj.cleaned_data)
+			todo_form_obj=todo_form()
+	context={
+		"form":todo_form_obj,
+		"t":todos,
 	}
 	return render(request,"todo/base.html",context)
-# def delete_view(request,*args,**kwargs):
+
+def delete_view(request,num):
+	delete_item = todo.objects.get(id=num)
+	print(delete_item)
+	return render(request,"todo/base.html",{})
